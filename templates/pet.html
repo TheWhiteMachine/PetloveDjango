@@ -1,0 +1,81 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h3> Regsitra una Nueva Mascota</h3>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        {% if post is not None %}
+        <input type="number" value="{{post.id}}" name="id">
+        {% endif %}
+
+        <div class="form-group my-3">
+            <label>Nombre</label>
+
+            <input type="text" class="form-control" name="nombre" {% if post is not None %} value="{{mascota.nombre}}"
+                {% endif %}>
+        </div>
+        <div class="form-group my-3">
+            <label>Especie</label>
+            <input type="text" class="form-control" name="especie" {% if post is not None %} value="{{mascota.especie}}"
+                {% endif %}>
+
+
+        </div>
+        <div class="form-group my-3">
+            <label>Raza</label>
+
+            <input type="text" class="form-control" name="raza" {% if post is not None %} value="{{mascota.raza}}" {%
+                endif %}>
+        </div>
+        <div class="form-group my-3">
+            <label>foto</label>
+
+            <input type="file" class="form-control" name="foto" placeholder="foto" accept="image/png,.jpg" {% if post is
+                not None %} value="{{mascota.foto}}" {% endif %}>
+        </div>
+        <div class="form-group my-3">
+            <label>Fecha de Nacimiento</label>
+
+            <input type="date" class="form-control" name="f_nacimiento" placeholder="fecha" {% if post is not None %}
+                value="{{mascota.f_nacimiento}}" {% endif %}>
+        </div>
+        <div class="form-group my-3">
+            <label>Personalidad de tu mascota</label>
+
+            <textarea class="form-control"
+                name="personalidad">{% if post is not None %}{{mascota.personalidad}}{% endif %}</textarea>
+
+        </div>
+        <div class="form-group my-3">
+            <label>Colores</label>
+
+            <textarea class="form-control"
+                name="colores">{% if post is not None %}{{mascota.colores}}{% endif %}</textarea>
+
+        </div>
+        <div class="form-group my-3">
+            <label>Agrega cualquier información extra sobre tu Mascota</label>
+
+            <textarea class="form-control" name="extra">{% if post is not None %}{{mascota.extra}}{% endif %}</textarea>
+
+        </div>
+        <div class="form-group my-3">
+            <label>Quires buscar adopción responsable para esta Masacota? Si o No</label>
+
+            <input type=text name="en_adopcion" {% if post is not None %} value="mascota.en_adopcion" {% endif %}>
+
+        </div>
+        <button class="btn btn-primary" type="submit">Enviar</button>
+    </form>
+
+</div>
+
+
+
+
+
+{% endblock %}

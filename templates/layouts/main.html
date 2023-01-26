@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Petlove</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">PETLOVE</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        {% if request.user.is_authenticated%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/post">Nuevo Post</a>
+                        </li>
+                        {%endif%}
+
+                        {% if request.user.is_authenticated%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout"> Cerrar sesión
+                            </a>
+                        </li>
+                        {%else%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login"> Iniciar sesión
+                            </a>
+                        </li>
+                        {%endif%}
+
+
+
+                        </li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container d-flex">
+        <div class="row">
+            <div class="col-4 p-2">
+                {% if request.user.is_authenticated %}
+                <h3 class="my-3 p-2">Bienvenido {{user.username}}</h3>
+                <div class=".bg-secundary p-3 m-3">
+
+                    <a class="nav-link " href="/registro_mascota">Regsitrar mascota</a>
+                </div>
+                <h3 class="mt-3">Mis Mascotas</h3>
+                {% for p in pets %}
+                <div class="card">
+                    <img src="..." class="card-img-top" alt="...">
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{p.nombre}}</h5>
+                        <p class="card-text">{{p.personalidad}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{p.raza}}</li>
+                        <li class="list-group-item">Edad</li>
+                        <li class="list-group-item">En adopción {{p.en_adopcion}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Ver mas</a>
+                        <a href="#" class="card-link">Solicitar Adopcion</a>
+                    </div>
+                    {%endfor%}
+                </div>
+                {% else %}
+                <p class=" my-3 p-2">Hola, registrate para ser parte de la mayor comunidad de amantes de lso animales,
+                    incluso puedes
+                    adoptar una si lo estás necesitando</p>
+                {%endif%}
+
+            </div>
+            <div class="col-8 p-2">
+                <div id="content ">
+                    <h2 class="m-5">Amor por los bichos</h2>
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if message.tags == "error" %}
+                    <div class="alert alert-danger" role="alert">{{message}}</div>
+                    {% else %}
+                    <div class="alert alert-{{message.tags}}" role="alert">{{message}}</div>
+                    {% endif %}
+
+                    {% endfor %}
+                    {% endif %}
+
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card text-center mt-5">
+        <div class="card-header">
+            PETLOVE
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">creado por Pablo Riveiro</h5>
+            <p class="card-text">Un lugar donde disfrutar y cuidar a nuestros hermanos animales.</p>
+
+        </div>
+        <div class="card-footer text-muted">
+            2023
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

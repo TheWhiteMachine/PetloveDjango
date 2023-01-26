@@ -1,0 +1,44 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+
+{% for p in posts %}
+
+<ul>
+
+    <div class="card border-secondary mb-3 " style="max-width: 50rem;">
+
+        <div class="card-header">{{p.title}}</div>
+        <div class="card-body text-secondary">
+            <h5 class="card-title">{{p.user}}</h5>
+            <p class="card-text">{{p.text}}</p>
+            {% for c in p.coment_set.all %}
+            <p> {{p.user.username}} Escribió : </p>
+            <p>{{c.text}}</p>
+            {%endfor%}
+            {% if request.user.is_authenticated and request.user == p.user%}
+            <a href="/post/{{p.id}}">Editar</a>
+
+
+
+            {%endif%}
+            {% if request.user.is_authenticated %}
+            <form method="post" action="/coment/">
+                {% csrf_token %}
+                <input type="hidden" value="{{p.id}}" name="post">
+                <div class="form-group my-3">
+
+                    <textarea class="form-control" name="text" placeholder="Escibe un comentario"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">Comentar</button>
+
+            </form>
+            {%endif%}
+        </div>
+</ul>
+
+
+{% endfor %}
+
+{% endblock %}
